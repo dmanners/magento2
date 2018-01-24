@@ -11,6 +11,21 @@ namespace Magento\Framework\Json;
 class Decoder implements DecoderInterface
 {
     /**
+     * @var \Magento\Framework\Serialize\Serializer\Json
+     */
+    private $serializer;
+
+    /**
+     * Decoder constructor.
+     * @param \Magento\Framework\Serialize\Serializer\Json|null $serializer
+     */
+    public function __construct(\Magento\Framework\Serialize\Serializer\Json $serializer = null)
+    {
+        $this->serializer = $serializer ?: \Magento\Framework\App\ObjectManager::getInstance()
+            ->get(\Magento\Framework\Serialize\Serializer\Json::class);
+    }
+
+    /**
      * Decodes the given $data string which is encoded in the JSON format.
      *
      * @param string $data
@@ -18,6 +33,6 @@ class Decoder implements DecoderInterface
      */
     public function decode($data)
     {
-        return \Zend_Json::decode($data);
+        return $this->serializer->serialize($data);
     }
 }

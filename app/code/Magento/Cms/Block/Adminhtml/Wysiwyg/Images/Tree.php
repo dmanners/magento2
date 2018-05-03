@@ -163,4 +163,12 @@ class Tree extends \Magento\Backend\Block\Template
             ]
         ];
     }
+
+    /**
+     * @return bool|string
+     */
+    public function getTreeWidgetOptionsJson()
+    {
+        return $this->serializer->serialize($this->getTreeWidgetOptions());
+    }
 }
